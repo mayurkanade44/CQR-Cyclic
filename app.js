@@ -1,5 +1,6 @@
 require("dotenv").config();
 require("express-async-errors");
+const cors = require("cors");
 
 const express = require("express");
 const app = express();
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV !== "production") {
 app.use(express.static(path.join(__dirname, "/frontend/build")));
 
 app.use(express.static("./public"));
+app.use(cors());
 app.use(express.json());
 app.use(uploadImage({ useTempFiles: true }));
 
