@@ -24,6 +24,7 @@ const { authenticateUser } = require("./middleware/auth");
 
 const path = require("path");
 
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
@@ -41,22 +42,23 @@ app.use(cors());
 app.use(express.json());
 app.use(uploadImage({ useTempFiles: true }));
 
+const port = process.env.PORT || 5000;
+
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URL);
+    console.log(`MongoDB Connected: ${conn.connection.host}`);
   } catch (error) {
     console.log(error);
     process.exit(1);
   }
 };
 
-app.all("*", (req, res) => {
-  app.use("/api", authRouter);
-  app.use("/api/contracts", authenticateUser, contractRouter);
-  app.use("/api/service", authenticateUser, serviceRouter);
-  app.use("/api/user", authenticateUser, userRouter);
-  app.use("/api/admin", authenticateUser, adminRouter);
-});
+app.use("/api", authRouter);
+app.use("/api/contracts", authenticateUser, contractRouter);
+app.use("/api/service", authenticateUser, serviceRouter);
+app.use("/api/user", authenticateUser, userRouter);
+app.use("/api/admin", authenticateUser, adminRouter);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/frontend/build", "index.html"));
@@ -64,8 +66,6 @@ app.get("*", (req, res) => {
 
 app.use(notFound);
 app.use(errorHandler);
-
-const port = process.env.PORT || 5000;
 
 // const start = async () => {
 //   try {
@@ -83,3 +83,5 @@ connectDB().then(() => {
     console.log("listening for requests");
   });
 });
+
+
