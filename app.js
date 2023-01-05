@@ -52,6 +52,10 @@ const connectDB = async () => {
   }
 };
 
+app.all("*", (req, res) => {
+  res.json({ "every thing": "is awesome" });
+});
+
 app.use("/api", authRouter);
 app.use("/api/contracts", authenticateUser, contractRouter);
 app.use("/api/service", authenticateUser, serviceRouter);
