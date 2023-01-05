@@ -24,7 +24,6 @@ const { authenticateUser } = require("./middleware/auth");
 
 const path = require("path");
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
@@ -42,7 +41,6 @@ app.use(cors());
 app.use(express.json());
 app.use(uploadImage({ useTempFiles: true }));
 
-
 const connectDB = async () => {
   try {
     const conn = await mongoose.connect(process.env.MONGO_URL);
@@ -53,14 +51,12 @@ const connectDB = async () => {
 };
 
 app.all("*", (req, res) => {
-  res.json({ "every thing": "is awesome" });
+  app.use("/api", authRouter);
+  app.use("/api/contracts", authenticateUser, contractRouter);
+  app.use("/api/service", authenticateUser, serviceRouter);
+  app.use("/api/user", authenticateUser, userRouter);
+  app.use("/api/admin", authenticateUser, adminRouter);
 });
-
-app.use("/api", authRouter);
-app.use("/api/contracts", authenticateUser, contractRouter);
-app.use("/api/service", authenticateUser, serviceRouter);
-app.use("/api/user", authenticateUser, userRouter);
-app.use("/api/admin", authenticateUser, adminRouter);
 
 app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname, "/frontend/build", "index.html"));
@@ -87,5 +83,3 @@ connectDB().then(() => {
     console.log("listening for requests");
   });
 });
-
-
