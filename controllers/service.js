@@ -114,9 +114,7 @@ const createDoc = async (req, res) => {
   try {
     services.forEach(async (element, index) => {
       const z = element._id.toString();
-      const tp = await QRCode.toDataURL(
-        `https://cqr.sat9.in/feedback/${z}`
-      );
+      const tp = await QRCode.toDataURL(`https://cqr.sat9.in/feedback/${z}`);
       let template = fs.readFileSync(path.resolve(__dirname, "test3.docx"));
       const template1 = fs.readFileSync(path.resolve(__dirname, "test2.docx"));
       const chem = element.chemicals;
@@ -173,18 +171,12 @@ const createDoc = async (req, res) => {
       const filename = `${contractName} ${element.frequency} ${
         index + 1
       } ${company}`;
-      fs.writeFileSync(
-        path.resolve(__dirname, "/tmp/", `${filename}.docx`),
-        buffer
-      );
-      const result = await cloudinary.uploader.upload(
-        `/tmp/${filename}.docx`,
-        {
-          resource_type: "raw",
-          use_filename: true,
-          folder: "service-cards",
-        }
-      );
+      fs.writeFileSync("/tmp/", `${filename}.docx`, buffer);
+      const result = await cloudinary.uploader.upload(`/tmp/${filename}.docx`, {
+        resource_type: "raw",
+        use_filename: true,
+        folder: "service-cards",
+      });
       const serv = await Service.findByIdAndUpdate(
         { _id: z },
         { card: result.secure_url },
