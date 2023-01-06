@@ -174,7 +174,7 @@ const createDoc = async (req, res) => {
         index + 1
       } ${company}`;
       fs.writeFileSync(
-        path.resolve(__dirname, "../tmp/", `${filename}.docx`),
+        path.resolve(__dirname, "/tmp/", `${filename}.docx`),
         buffer
       );
       const result = await cloudinary.uploader.upload(
@@ -193,7 +193,7 @@ const createDoc = async (req, res) => {
           runValidators: true,
         }
       );
-      fs.unlinkSync(`./tmp/${filename}.docx`);
+      fs.unlinkSync(`/tmp/${filename}.docx`);
     });
     if (type === "NC" && !sendMail) {
       sendContractEmail(emails, contractNo, allserv, allfreq, start, end, id);
@@ -494,8 +494,8 @@ const generateQr = async (isValidContract, services) => {
     const name = `${contractName} ${services.frequency} ${services.service.length}`;
 
     const stringdata = `https://cqr.sat9.in/feedback/${serviceId}`;
-    await QRCode.toFile(`./tmp/${name}.png`, stringdata, { width: 20 });
-    const result = await cloudinary.uploader.upload(`files/${name}.png`, {
+    await QRCode.toFile(`/tmp/${name}.png`, stringdata, { width: 20 });
+    const result = await cloudinary.uploader.upload(`tmp/${name}.png`, {
       width: 80,
       height: 80,
       use_filename: true,
@@ -509,7 +509,7 @@ const generateQr = async (isValidContract, services) => {
         runValidators: true,
       }
     );
-    fs.unlinkSync(`./tmp/${name}.png`);
+    fs.unlinkSync(`/tmp/${name}.png`);
   } catch (error) {
     console.log(error);
   }
