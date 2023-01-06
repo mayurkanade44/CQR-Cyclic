@@ -644,13 +644,13 @@ const generateReport = async (req, res) => {
     const json2csvParser = new Parser({ fields });
     const csv = json2csvParser.parse(fields1);
 
-    fs.writeFileSync(path.resolve(__dirname, "../files/", filename), csv);
-    const result = await cloudinary.uploader.upload(`files/${filename}`, {
+    fs.writeFileSync(path.resolve(__dirname, "/tmp/", filename), csv);
+    const result = await cloudinary.uploader.upload(`/tmp/${filename}`, {
       resource_type: "raw",
       use_filename: true,
       folder: "service-reports",
     });
-    fs.unlinkSync(`./files/${filename}`);
+    fs.unlinkSync(`/tmp/${filename}`);
     res.status(200).json({ msg: result.secure_url });
   } catch (error) {
     console.log(error);
@@ -756,13 +756,13 @@ const generateBusinessFile = async (req, res) => {
     ];
     const json2csvParser = new Parser({ fields });
     const csv = json2csvParser.parse(data);
-    fs.writeFileSync(path.resolve(__dirname, "../files/", filename), csv);
-    const result = await cloudinary.uploader.upload(`files/${filename}`, {
+    fs.writeFileSync(path.resolve(__dirname, "/tmp/", filename), csv);
+    const result = await cloudinary.uploader.upload(`/tmp/${filename}`, {
       resource_type: "raw",
       use_filename: true,
       folder: "service-reports",
     });
-    fs.unlinkSync(`./files/${filename}`);
+    fs.unlinkSync(`/tmp/${filename}`);
     res.status(200).json({ msg: result.secure_url });
   } catch (error) {
     console.log(error);
@@ -876,13 +876,13 @@ const serviceNotDoneReport = async (req, res) => {
 
     const csv = json2csvParser.parse(data);
 
-    fs.writeFileSync(path.resolve(__dirname, "../files/", filename), csv);
-    const result = await cloudinary.uploader.upload(`files/${filename}`, {
+    fs.writeFileSync(path.resolve(__dirname, "/tmp/", filename), csv);
+    const result = await cloudinary.uploader.upload(`/tmp/${filename}`, {
       resource_type: "raw",
       use_filename: true,
       folder: "service-reports",
     });
-    fs.unlinkSync(`./files/${filename}`);
+    fs.unlinkSync(`/tmp/${filename}`);
     res.status(200).json({ link: result.secure_url });
   } catch (error) {
     res.status(500).json({ msg: error });
@@ -919,13 +919,13 @@ const dailyReport = async (req, res) => {
   //   for (let fields of allFields) {
   //     const json2csvParser = new Parser({ fields });
   //     const csv = json2csvParser.parse(data);
-  //     fs.writeFileSync(path.resolve(__dirname, "../files/", filename), csv);
-  //     const result = await cloudinary.uploader.upload(`files/${filename}`, {
+  //     fs.writeFileSync(`/temp/${filename}`, csv);
+  //     const result = await cloudinary.uploader.upload(`/temp/${filename}`, {
   //       resource_type: "raw",
   //       use_filename: true,
   //       folder: "service-reports",
   //     });
-  //     fs.unlinkSync(`./files/${filename}`);
+  //     fs.unlinkSync(`/temp/${filename}`);
   //     image.push(result.secure_url);
   //   }
   //   const files = {
