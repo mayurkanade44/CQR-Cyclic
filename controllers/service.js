@@ -919,13 +919,13 @@ const dailyReport = async (req, res) => {
   //   for (let fields of allFields) {
   //     const json2csvParser = new Parser({ fields });
   //     const csv = json2csvParser.parse(data);
-  //     fs.writeFileSync(`/temp/${filename}`, csv);
-  //     const result = await cloudinary.uploader.upload(`/temp/${filename}`, {
+  //     fs.writeFileSync(`/tmp/${filename}`, csv);
+  //     const result = await cloudinary.uploader.upload(`/tmp/${filename}`, {
   //       resource_type: "raw",
   //       use_filename: true,
   //       folder: "service-reports",
   //     });
-  //     fs.unlinkSync(`/temp/${filename}`);
+  //     fs.unlinkSync(`/tmp/${filename}`);
   //     image.push(result.secure_url);
   //   }
   //   const files = {

@@ -54,13 +54,13 @@ const generateRenewalFile = async (contracts) => {
   const json2csvParser = new Parser({ fields });
   const csv = json2csvParser.parse(contracts);
 
-  fs.writeFileSync(path.resolve(__dirname, "/temp/", fileName), csv);
-  const result = await cloudinary.uploader.upload(`/temp/${fileName}`, {
+  fs.writeFileSync(path.resolve(__dirname, "/tmp/", fileName), csv);
+  const result = await cloudinary.uploader.upload(`/tmp/${fileName}`, {
     resource_type: "raw",
     use_filename: true,
     folder: "service-reports",
   });
-  fs.unlinkSync(`/temp/${fileName}`);
+  fs.unlinkSync(`/tmp/${fileName}`);
   return result.secure_url;
 };
 
@@ -89,10 +89,10 @@ const fileUpload = async (req, res) => {
     }
 
     const docFile = req.files.doc;
-    const docPath = `/temp/${docFile.name}`;
+    const docPath = `/tmp/${docFile.name}`;
     await docFile.mv(docPath);
 
-    const result = await cloudinary.uploader.upload(`/temp/${docFile.name}`, {
+    const result = await cloudinary.uploader.upload(`/tmp/${docFile.name}`, {
       resource_type: "raw",
       use_filename: true,
       folder: "mcd",
@@ -109,7 +109,7 @@ const fileUpload = async (req, res) => {
 
     await contact.save();
 
-    fs.unlinkSync(`/temp/${docFile.name}`);
+    fs.unlinkSync(`/tmp/${docFile.name}`);
     return res.status(200).json({ msg: "File has been uploaded" });
   } catch (error) {
     res.status(500).json({ msg: error });
