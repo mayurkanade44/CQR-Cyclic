@@ -89,7 +89,7 @@ const fileUpload = async (req, res) => {
     }
 
     const docFile = req.files.doc;
-    const docPath = path.join(__dirname, "/temp/" + `${docFile.name}`);
+    const docPath = `/temp/${docFile.name}`;
     await docFile.mv(docPath);
 
     const result = await cloudinary.uploader.upload(`/temp/${docFile.name}`, {
