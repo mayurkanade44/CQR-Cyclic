@@ -178,7 +178,7 @@ const createDoc = async (req, res) => {
         buffer
       );
       const result = await cloudinary.uploader.upload(
-        `tmp/${filename}.docx`,
+        `/tmp/${filename}.docx`,
         {
           resource_type: "raw",
           use_filename: true,
@@ -495,7 +495,7 @@ const generateQr = async (isValidContract, services) => {
 
     const stringdata = `https://cqr.sat9.in/feedback/${serviceId}`;
     await QRCode.toFile(`/tmp/${name}.png`, stringdata, { width: 20 });
-    const result = await cloudinary.uploader.upload(`tmp/${name}.png`, {
+    const result = await cloudinary.uploader.upload(`/tmp/${name}.png`, {
       width: 80,
       height: 80,
       use_filename: true,
