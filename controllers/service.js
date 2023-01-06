@@ -171,7 +171,7 @@ const createDoc = async (req, res) => {
       const filename = `${contractName} ${element.frequency} ${
         index + 1
       } ${company}`;
-      fs.writeFileSync("/tmp/", `${filename}.docx`, buffer);
+      fs.writeFileSync(`/tmp/${filename}.docx`, buffer);
       const result = await cloudinary.uploader.upload(`/tmp/${filename}.docx`, {
         resource_type: "raw",
         use_filename: true,
