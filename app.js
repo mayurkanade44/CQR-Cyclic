@@ -24,7 +24,6 @@ const { authenticateUser } = require("./middleware/auth");
 
 const path = require("path");
 
-
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_KEY,
@@ -40,7 +39,7 @@ app.use(express.static(path.join(__dirname, "/frontend/build")));
 app.use(express.static("./public"));
 app.use(cors());
 app.use(express.json());
-app.use(uploadImage({ useTempFiles: true }));
+app.use(uploadImage({ useTempFiles: true, tempFileDir: "/tmp/" }));
 
 const port = process.env.PORT || 5000;
 
@@ -83,5 +82,3 @@ connectDB().then(() => {
     console.log("listening for requests");
   });
 });
-
-
